@@ -15,6 +15,7 @@ public  class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+
     @Override
     public Product findById(Long id) {
         return productRepository.findOne(id);
@@ -39,6 +40,7 @@ public  class ProductServiceImpl implements ProductService {
     public void deleteProductById(Long id) {
         productRepository.delete(id);
     }
+
 
     @Override
     public void deleteAllProducts() {
