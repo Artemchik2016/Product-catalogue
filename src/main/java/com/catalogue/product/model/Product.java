@@ -9,6 +9,16 @@ import java.math.BigDecimal;
 @Table(name = "product")
 public class Product implements Serializable {
 
+	public Product() {
+	}
+
+	public Product(String name, String description, BigDecimal price) {
+		this.name = name;
+		this.description = description;
+
+		this.price = price;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -16,11 +26,20 @@ public class Product implements Serializable {
     @Column(name="name", nullable=false)
 	private String name;
 
-    @Column(name="price", nullable=false)
+    @Column(name = "description", nullable=true, columnDefinition="VARCHAR(255)")
+	private String description;
+
+	@Column(name="price", nullable=false)
 	private BigDecimal price;
 
-    @Column(name="quantity", nullable=false)
-    private Integer quantity;
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -45,15 +64,7 @@ public class Product implements Serializable {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-	
-	public Integer getQuantity() {
-		return quantity;
-	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-	
 
 	@Override
 	public boolean equals(Object that) {
@@ -70,7 +81,6 @@ public class Product implements Serializable {
 		int result = id.hashCode();
 		result = 31 * result + name.hashCode();
 		result = 31 * result + price.hashCode();
-		result = 31 * result + quantity.hashCode();
 		return result;
 	}
 }

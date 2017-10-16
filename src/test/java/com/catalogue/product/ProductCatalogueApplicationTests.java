@@ -56,7 +56,7 @@ public class ProductCatalogueApplicationTests {
     }
 
 
-    @Test(expected = Exception.class)
+    @Test
     public void testDelete() {
         Product product = createNewProduct();
         productService.saveProduct(product);
@@ -69,7 +69,6 @@ public class ProductCatalogueApplicationTests {
         Product product = new Product();
         product.setName("Boots");
         product.setPrice(BigDecimal.valueOf(250));
-        product.setQuantity(50);
         return product;
     }
 
