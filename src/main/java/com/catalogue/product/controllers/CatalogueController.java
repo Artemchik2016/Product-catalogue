@@ -9,8 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
+import java.beans.Transient;
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -19,12 +26,22 @@ public class CatalogueController {
     @Autowired
     ProductService productService;
 
+
+
+
+
     @RequestMapping("/")
-    String home(ModelMap modelMap) {
-        modelMap.addAttribute("title","Products catalogue");
+    public String list(Model model) {
+        model.addAttribute("title", "Products catalog");
         return "index";
     }
 
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public String products(ModelMap modelMap) {
+        List<Product> productList = productService.findAllProducts();
+        modelMap.addAttribute("productList", productList);
+        return "products";
+    }
 
     @RequestMapping(value = "/findAllProducts", method = RequestMethod.GET)
     public ResponseEntity<List<Product>> findAllProducts() {
@@ -36,16 +53,53 @@ public class CatalogueController {
     }
 
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
+
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct,
+                                           BindingResult result, HttpServletRequest request){
+
+        String[] supressedFields = result.getSuppressedFields();
+        if(supressedFields.length > 0){
+            throw new RuntimeException("Attempting to bind disallowed fields:"+ StringUtils.arrayToCommaDelimitedString(supressedFields));
+        }
+
+        MultipartFile productImage = newProduct.getProductImage();
+        String fileName = productImage.getOriginalFilename();
+
+        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+
+        if(productImage != null && !productImage.isEmpty()){
+            try{
+                File file = new File(rootDirectory+"\\images\\"+newProduct.getId()+"."+
+                        productService.getFileExtension(fileName));
+                productImage.transferTo(file);
+            } catch( Exception e){
+                throw new RuntimeException("Product Image saving failed!", e);
+            }
+        }
+        newProduct.setImageSource(newProduct.getId()+"."+ productService.getFileExtension(fileName));
+        productService.saveProduct(newProduct);
+        return "redirect:/products";
+    }
+
 
     @RequestMapping("/add")
     String addProduct(ModelMap modelMap){
         return "index";
     }
 
+
     @RequestMapping(value = "/findProduct/{productId}", method= RequestMethod.GET)
     @ResponseBody
-    Product findProductById(@PathVariable Long productId){
-        return productService.findById(productId);
+    String findProductById(@PathVariable Long productId,ModelMap modelMap){
+        Product product = productService.findById(productId);
+        modelMap.addAttribute("product",product);
+        return "product";
     }
 
     @RequestMapping("/save")

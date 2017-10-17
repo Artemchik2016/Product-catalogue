@@ -20,9 +20,9 @@ class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        productService.saveProduct(new Product("Boots", "Winter boots", BigDecimal.valueOf(199)));
-        productService.saveProduct(new Product("Shoes", "Spring shoes", BigDecimal.valueOf(149)));
-        productService.saveProduct(new Product("Moccasin", "Very nice summer moccasin ", BigDecimal.valueOf(219)));
-        productService.saveProduct(new Product("Gladiators", "Autumn gladiators", BigDecimal.valueOf(99.99)));
+        productService.saveProduct(new Product("Boots", "Winter boots", BigDecimal.valueOf(199),"/images/boots.jpg"));
+        productService.saveProduct(new Product("Shoes", "Spring shoes", BigDecimal.valueOf(149),"/images/shoes.jpg"));
+        productService.saveProduct(new Product("Moccasin", "Very nice summer moccasin ", BigDecimal.valueOf(219),"/images/moccasin.jpg"));
+        productService.saveProduct(new Product("Gladiators", "Autumn gladiators", BigDecimal.valueOf(99.99),"/images/gladiators.jpg"));
     }
 }

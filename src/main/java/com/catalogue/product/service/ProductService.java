@@ -22,4 +22,6 @@ public interface ProductService {
     List<Product> findAllProducts();
 
     boolean isProductExist(Product product);
+
+    public String getFileExtension(String fileName);
 }

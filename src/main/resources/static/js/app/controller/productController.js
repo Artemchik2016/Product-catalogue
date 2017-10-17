@@ -1,5 +1,4 @@
-app.controller("productController", function($scope, $filter, $http) {
-
+app.controller("productController", function($scope, $http) {
 
     $scope.initProductList = function() {
             var url = 'http://localhost:8080/findAllProducts';

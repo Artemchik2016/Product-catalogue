@@ -19,6 +19,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
@@ -38,12 +40,21 @@ public class JpaConfiguration {
 	@Value("${datasource.sampleapp.maxPoolSize:10}")
 	private int maxPoolSize;
 
-
 	@Bean
 	@Primary
 	@ConfigurationProperties(prefix = "datasource.sampleapp")
 	public DataSourceProperties dataSourceProperties(){
 		return new DataSourceProperties();
+	}
+
+
+	@Bean
+	public InternalResourceViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setPrefix("/templates");
+		viewResolver.setSuffix(".jsp");
+		return viewResolver;
 	}
 
 
