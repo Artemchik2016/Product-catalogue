@@ -25,32 +25,65 @@
 
 	<section class="container" ng-controller="productController">
 
-		<div class="row">
-			<div class="col-md-6">
-				<img src={{product.imageSource}}" class="single-img" alt="image" />
-			</div>
+        <section class="container">
+            <form  name="product" method="POST"  enctype="multipart/form-data" class="form-horizontal" action="http://localhost:8080/updateProductProcess">
 
-			<div class="col-md-6">
+                <fieldset>
+                    <legend>Add new product</legend>
 
-				<h3>${product.name}</h3>
 
-				<p>${product.description}</p>
 
-				<p>
-					<strong>Item Code : </strong><span class="label label-warning">${product.productId}</span>
-				</p>
-				<p>
-					<strong>manufacturer</strong> : ${product.manufacturer}
-				</p>
-				<p>
-					<strong>category</strong> : ${product.category}
-				</p>
-				<p>
-					<strong>Availble units in stock </strong> : ${product.unitsInStock}
-				</p>
-				<h4>${product.price}USD</h4>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2 col-lg-2" for="id">ProductID</label>
+                        <div class="col-lg-10">
+                            <input id="id" type="text" name="id" class="form:input-large" value="${product.id}" />
+                        </div>
+                    </div>
 
-			</div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2 col-lg-2" for="name">Name</label>
+                        <div class="col-lg-10">
+                            <input id="name" type="text" name="name" class="form:input-large" value="${product.name}"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2 col-lg-2" for="unitPrice">Price</label>
+                        <div class="col-lg-10">
+                            <input type="text" id="price" name="price" class="form:input-large" value="${product.price}"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2" for="description">Description</label>
+                        <div class="col-lg-10">
+                            <input type="text" id="description" name="description" rows="2" value="${product.description}"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group fileUploadHandle">
+                        <label class="control-label col-lg-2 col-lg-2" for="productImage">Product image</label>
+                        <div class="col-lg-10">
+                            <input type="text" name ="imageSource" class="form:input-large" id="imageSource" value="${product.imageSource}" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <input type="submit" id="btnAdd" class="btn btn-primary"
+                                   value="Update" />
+                        </div>
+                    </div>
+
+                </fieldset>
+        </section>
 		</div>
 	</section>
 </body>

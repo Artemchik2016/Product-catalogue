@@ -28,41 +28,6 @@ app.controller("productController", function($scope, $http) {
         });
     };
 
-    $scope.createProduct = function () {
-        $scope.errorMessage = null;
-        $scope.infoMessage = null;
-        $scope.state = null;
-        $scope.product = {
-            name: "",
-            description: "",
-            price: 0
-        };
-        return true;
-    };
-
-
-
-    $scope.saveProduct = function () {
-        $scope.errorMessage = null;
-        $scope.infoMessage = null;
-        $scope.state = null;
-        $scope.loading = true;
-        $http.post('http://localhost:8080/save', $scope.product).then(
-            function (res, respStatus, headers, config) {
-                $scope.loading = false;
-                if (data.errorMessage) {
-                    $scope.errorMessage = res.data.errorMessage;
-                } else {
-                    $scope.product = null;
-                    $scope.initProductList();
-                    $scope.infoMessage = 'Successfully saved the product';
-                }
-            }, function error(data, respStatus, headers, config) {
-                $scope.loading = false;
-                $scope.errorMessage = "Request error";
-            });
-    };
-
 
 
 });

@@ -55,8 +55,33 @@ public class CatalogueController {
     }
 
 
+    @RequestMapping(value = "/updateProduct", method = RequestMethod.GET)
+    public String updateProduct(@RequestParam("productId") Long productId, ModelMap modelMap){
+        Product product = productService.findById(productId);
+        if(product!=null){
+            modelMap.addAttribute("product", product);
+            return "updateProduct";
+        }else{
+            return "products";
+        }
+    }
+
+
+    @RequestMapping(value = "/updateProductProcess", method = RequestMethod.POST)
+    public String updateProcessProduct(@ModelAttribute("product")Product newProduct){
+        Product retrievedProduct = productService.findById(newProduct.getId());
+        retrievedProduct.setName(newProduct.getName());
+        retrievedProduct.setPrice(newProduct.getPrice());
+        retrievedProduct.setDescription(newProduct.getDescription());
+        productService.updateProduct(retrievedProduct);
+        return "products";
+    }
+
+
+
+
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.GET)
-    public String deleteProductById(@RequestParam("id") Long productId){
+    public String deleteProductById(@RequestParam("productId") Long productId){
         productService.deleteProductById(productId);
         return "products";
     }

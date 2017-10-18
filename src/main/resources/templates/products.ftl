@@ -36,8 +36,11 @@
 						</a>
 						<p>{{product.description}}</p>
 						<p>{{product.price}} USD</p>
-					    <p><a href="http://localhost:8080/deleteProduct?id={{product.id}}" class="btn btn-danger" >
-						Delete</a></p>
+					    <p>
+						   <a href="http://localhost:8080/deleteProduct?productId={{product.id}}" class="btn btn-danger">Delete</a>
+						   <a href="http://localhost:8080/updateProduct?productId={{product.id}}" class="btn btn-info"> Update</a>
+						</p>
+
 				</div>
 			</div>
 		</div>

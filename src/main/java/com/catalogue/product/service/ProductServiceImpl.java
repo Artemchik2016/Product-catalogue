@@ -53,13 +53,6 @@ public  class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-    @Override
-    public String getFileExtension(String fileName){
-        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-            return fileName.substring(fileName.lastIndexOf(".")+1);
-        else
-            return "";
-    }
 
     @Override
     public boolean isProductExist(Product product) {
