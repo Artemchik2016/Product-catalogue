@@ -18,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.net.URLDecoder;
-
 import java.util.List;
 
 @Controller
@@ -33,7 +31,7 @@ public class CatalogueController {
 
 
     @RequestMapping("/")
-    public String list(Model model) {
+    public String list() {
         return "products";
     }
 
@@ -79,7 +77,6 @@ public class CatalogueController {
 
 
 
-
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.GET)
     public String deleteProductById(@RequestParam("productId") Long productId){
         productService.deleteProductById(productId);
@@ -102,7 +99,7 @@ public class CatalogueController {
 
         if(file != null && !file.isEmpty()){
             try{
-                File tempFile = new File(ProgramDirectoryUtils.getProgramDirectory() + "\\src\\main\\resources\\images\\" + fileName);
+                File tempFile = new File(ProgramDirectoryUtils.getProgramDirectory() + "\\src\\main\\resources\\static\\images\\" + fileName);
                 file.transferTo(tempFile);
             } catch( Exception e){
                 throw new RuntimeException("Product Image saving failed!", e);
@@ -116,7 +113,7 @@ public class CatalogueController {
     }
 
     @RequestMapping("/addProduct")
-    String addProduct(ModelMap modelMap){
+    String addProduct(){
         return "addProduct";
     }
 

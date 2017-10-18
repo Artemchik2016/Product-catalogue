@@ -2,13 +2,13 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<link href="css/style.css" rel="stylesheet"/>
+<link href="css/bootstrap.css" rel="stylesheet" media="screen"/>
+<link href="css/styles.css" rel="stylesheet" media="screen"/>
 <script src="js/lib/angular.js"></script>
-<script src="js/app/service/ng-table.min.js"></script>
-<script src="js/app/controller/controller.js"></script>
+<script src="js/app/app.js"></script>
+<script src="js/app/controller/productController.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="js/app/controller/script"></script>
+<script src="js/app/controller/scripts.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html;">
 <title>Product - {{product.name}}</title>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<#import "/spring.ftl" as spring />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
     <link href="css/bootstrap.css" rel="stylesheet"/>
