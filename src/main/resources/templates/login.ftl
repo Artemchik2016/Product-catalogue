@@ -29,7 +29,7 @@
 						<h3 class="panel-title">Please sign in</h3>
 					</div>
 					<div class="panel-body">
-						<form action="" method="post">
+						<form action="http://localhost:8080/login" method="post">
 							<fieldset>
 								<div class="form-group">
 									<input class="form-control" placeholder="User Name"

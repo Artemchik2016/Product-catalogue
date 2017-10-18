@@ -11,10 +11,10 @@
 <script src="js/app/controller/script"></script>
 
 <meta http-equiv="Content-Type" content="text/html;">
-<title>Product - ${product.name}</title>
+<title>Product - {{product.name}}</title>
 </head>
 
-<body>
+<body ng-app="app">
 	<section>
 		<div class="jumbotron">
 			<div class="container">
@@ -23,11 +23,11 @@
 		</div>
 	</section>
 
-	<section class="container" ng-app="cartApp">
+	<section class="container" ng-controller="productController">
 
 		<div class="row">
 			<div class="col-md-6">
-				<img src=/images/${product.imageSource}" class="single-img" alt="image" />
+				<img src={{product.imageSource}}" class="single-img" alt="image" />
 			</div>
 
 			<div class="col-md-6">

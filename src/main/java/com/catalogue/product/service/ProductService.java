@@ -23,5 +23,4 @@ public interface ProductService {
 
     boolean isProductExist(Product product);
 
-    public String getFileExtension(String fileName);
 }

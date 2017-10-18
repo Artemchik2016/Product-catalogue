@@ -51,7 +51,7 @@ public class ProductCatalogueApplicationTests {
         product.setName("Shoes");
         productService.saveProduct(product);
         productList.add(product);
-        Product updatedProduct = productService.findByName(product.getName());
+        Product updatedProduct = productService.findById(product.getId());
         Assert.assertNotNull(updatedProduct);
     }
 

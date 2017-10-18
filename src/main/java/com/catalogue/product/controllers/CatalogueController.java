@@ -3,7 +3,9 @@ package com.catalogue.product.controllers;
 
 import com.catalogue.product.model.Product;
 import com.catalogue.product.service.ProductService;
+import com.catalogue.product.utils.ProgramDirectoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
-import java.beans.Transient;
-import java.io.File;
+import java.io.*;
+import java.net.URLDecoder;
+
 import java.util.List;
 
 @Controller
@@ -26,15 +28,15 @@ public class CatalogueController {
     @Autowired
     ProductService productService;
 
-
-
+    @Autowired
+    ResourceLoader resourceLoader;
 
 
     @RequestMapping("/")
     public String list(Model model) {
-        model.addAttribute("title", "Products catalog");
-        return "index";
+        return "products";
     }
+
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String products(ModelMap modelMap) {
@@ -53,44 +55,44 @@ public class CatalogueController {
     }
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(){
-        return "login";
+    @RequestMapping(value = "/deleteProduct", method = RequestMethod.GET)
+    public String deleteProductById(@RequestParam("id") Long productId){
+        productService.deleteProductById(productId);
+        return "products";
     }
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct,
-                                           BindingResult result, HttpServletRequest request){
+    public String processAddNewProductForm(@ModelAttribute("product")Product newProduct,
+                                           BindingResult result, HttpServletRequest request) {
 
         String[] supressedFields = result.getSuppressedFields();
-        if(supressedFields.length > 0){
-            throw new RuntimeException("Attempting to bind disallowed fields:"+ StringUtils.arrayToCommaDelimitedString(supressedFields));
+        if (supressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields:" + StringUtils.arrayToCommaDelimitedString(supressedFields));
         }
 
-        MultipartFile productImage = newProduct.getProductImage();
-        String fileName = productImage.getOriginalFilename();
+        MultipartFile file = newProduct.getProductImage();
+        String fileName = file.getOriginalFilename();
 
-        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 
-        if(productImage != null && !productImage.isEmpty()){
+        if(file != null && !file.isEmpty()){
             try{
-                File file = new File(rootDirectory+"\\images\\"+newProduct.getId()+"."+
-                        productService.getFileExtension(fileName));
-                productImage.transferTo(file);
+                File tempFile = new File(ProgramDirectoryUtils.getProgramDirectory() + "\\src\\main\\resources\\images\\" + fileName);
+                file.transferTo(tempFile);
             } catch( Exception e){
                 throw new RuntimeException("Product Image saving failed!", e);
             }
         }
-        newProduct.setImageSource(newProduct.getId()+"."+ productService.getFileExtension(fileName));
+
+        newProduct.setImageSource("/images/" + fileName);
         productService.saveProduct(newProduct);
         return "redirect:/products";
+
     }
 
-
-    @RequestMapping("/add")
+    @RequestMapping("/addProduct")
     String addProduct(ModelMap modelMap){
-        return "index";
+        return "addProduct";
     }
 
 
@@ -106,9 +108,6 @@ public class CatalogueController {
     public void saveProduct(@RequestBody Product product){
         productService.saveProduct(product);
     }
-
-
-
 
 
 }

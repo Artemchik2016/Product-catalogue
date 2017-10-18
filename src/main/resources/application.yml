@@ -13,6 +13,7 @@ datasource:
     driverClassName: org.h2.Driver
     defaultSchema:
     maxPoolSize: 10
+    multipart.enabled : true
     hibernate:
       hbm2ddl.method: create-drop
       show_sql: true

@@ -17,8 +17,7 @@
 	<section>
 	<div class="jumbotron">
 		<div class="container">
-		<a href="http://localhost:8080/login" class="btn btn-default btn-mini pull-right">Login as Admin</a>
-		<a href="http://localhost:8080/add" class="btn btn-default pull-right">Add product</a>
+		<a href="http://localhost:8080/addProduct" class="btn btn-default pull-right">Add product</a>
 
 			<h1>Products</h1>
 			<p>All the available products in our store</p>
@@ -33,13 +32,12 @@
 			<div class="thumbnail">
 				<div class="caption">
 						<h3>{{product.name}}</h3>
-						<a href="http://localhost:8080//product?id={{product.productId}}">
-						<img src="{{product.imageSource}}" alt="image"/>
+					    <img src="{{product.imageSource}}" alt="image"/>
 						</a>
 						<p>{{product.description}}</p>
 						<p>{{product.price}} USD</p>
-					    <p><a href="http://localhost:8080//product?id={{product.productId}}" class="btn btn-primary" >
-						Details</a></p>
+					    <p><a href="http://localhost:8080/deleteProduct?id={{product.id}}" class="btn btn-danger" >
+						Delete</a></p>
 				</div>
 			</div>
 		</div>

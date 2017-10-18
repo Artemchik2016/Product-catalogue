@@ -27,7 +27,7 @@ public class Product implements Serializable {
 	private String imageSource;
 
 	@JsonIgnore
-	@Lob
+	@Transient
 	private MultipartFile productImage;
 
 	public MultipartFile getProductImage() {

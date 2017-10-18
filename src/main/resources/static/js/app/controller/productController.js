@@ -1,12 +1,10 @@
 app.controller("productController", function($scope, $http) {
 
-    $scope.initProductList = function() {
-            var url = 'http://localhost:8080/findAllProducts';
-            $http.get(url).then(function(response){
-                $scope.allProducts = response.data;
-            });
 
-    };
+    var url = 'http://localhost:8080/findAllProducts';
+    $http.get(url).then(function(response){
+        $scope.allProducts = response.data;
+    });
 
 
     $scope.editProduct = function (product) {
@@ -67,5 +65,4 @@ app.controller("productController", function($scope, $http) {
 
 
 
-    $scope.initProductList();
 });
