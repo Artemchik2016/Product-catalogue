@@ -19,7 +19,6 @@
 	<section>
 		<div class="jumbotron">
 			<div class="container">
-				<a href="http://localhost:8080/logout" class="btn btn-danger btn-mini pull-right" >logout</a>
 				<a href="products.ftl" class="btn btn-success pull-right">Products</a>
 
 				<h1>Products</h1>
