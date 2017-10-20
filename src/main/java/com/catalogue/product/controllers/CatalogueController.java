@@ -18,6 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -93,24 +97,19 @@ public class CatalogueController {
             throw new RuntimeException("Attempting to bind disallowed fields:" + StringUtils.arrayToCommaDelimitedString(supressedFields));
         }
 
+
+        String path = "D:/tempProduct/";
         MultipartFile file = newProduct.getProductImage();
         String fileName = file.getOriginalFilename();
+        saveUploadedFile(path,file);
 
 
-        if(file != null && !file.isEmpty()){
-            try{
-                File tempFile = new File(ProgramDirectoryUtils.getProgramDirectory() + "\\src\\main\\resources\\static\\images\\" + fileName);
-                file.transferTo(tempFile);
-            } catch( Exception e){
-                throw new RuntimeException("Product Image saving failed!", e);
-            }
-        }
-
-        newProduct.setImageSource("/images/" + fileName);
+        newProduct.setImageSource("/tempProduct/" + fileName);
         productService.saveProduct(newProduct);
         return "redirect:/products";
 
     }
+
 
     @RequestMapping("/addProduct")
     String addProduct(){
@@ -131,5 +130,30 @@ public class CatalogueController {
         productService.saveProduct(product);
     }
 
+
+    /**
+     * Save uploaded file to server
+     * @param path Location of the server to save file
+     * @param uploadedFile Current uploaded file
+     */
+
+
+    public static void saveUploadedFile(String path, MultipartFile uploadedFile) {
+        try {
+            //First, Generate file to make directories
+            String savedFileName = path + "/" + uploadedFile.getOriginalFilename();
+            File fileToSave = new File(savedFileName);
+            fileToSave.getParentFile().mkdirs();
+            fileToSave.delete();
+            //Generate path file to copy file
+            Path folder = Paths.get(savedFileName);
+            Path fileToSavePath = Files.createFile(folder);
+            //Copy file to server
+            InputStream input = uploadedFile.getInputStream();
+            Files.copy(input, fileToSavePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }
