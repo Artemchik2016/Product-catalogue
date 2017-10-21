@@ -98,7 +98,7 @@ public class CatalogueController {
         }
 
 
-        String path = "D:/tempProduct/";
+        String path = "C:/tempProduct/";
         MultipartFile file = newProduct.getProductImage();
         String fileName = file.getOriginalFilename();
         saveUploadedFile(path,file);

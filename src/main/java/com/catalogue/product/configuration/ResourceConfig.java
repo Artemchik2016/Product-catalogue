@@ -5,15 +5,14 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class ResourceConfig {
+public class ResourceConfig extends WebMvcConfigurerAdapter{
 
-    public class MvcConfig extends WebMvcConfigurerAdapter {
-        @Override
+       @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            String myExternalFilePath = "file:///D:/tempProduct/";
+            String myExternalFilePath = "file:///C:/tempProduct/";
             registry.addResourceHandler("/tempProduct/**").addResourceLocations(myExternalFilePath);
             super.addResourceHandlers(registry);
         }
     }
 
-}
+
